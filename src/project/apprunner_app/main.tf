@@ -46,6 +46,10 @@ module "app_sg" {
   security_group_name = "app-sg"
 }
 
+module "current_account" {
+  source = "../../modules/get_aws_account"
+}
+
 # module "user_front_ecr_repository" {
 #   source = "../../modules/get_ecr_repository"
 

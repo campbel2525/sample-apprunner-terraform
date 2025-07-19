@@ -18,5 +18,5 @@ variable "github_fingerprint" {
 }
 variable "github_subject" {
   type        = string
-  description = "repo:<github account名>/<リポジトリ名>:ref:refs/heads/<ブランチ名>"
+  description = "repo:<GitHubのアカウント名>/<リポジトリ名>:environment:<branch名>"
 }

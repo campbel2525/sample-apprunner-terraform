@@ -6,7 +6,6 @@
 resource "aws_iam_role" "apprunner_instance_role" {
   name = "${var.app_name}-apprunner-instance-role"
 
-  # App Runnerのタスク（実行中のコンテナ）がこのロールを引き受けることを許可
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -21,9 +20,6 @@ resource "aws_iam_role" "apprunner_instance_role" {
   })
 }
 resource "aws_iam_policy" "ssm_read_policy" {
-  # name        = "AppRunner-SSMParameterReadAccess"
-  # description = "Allows reading parameters from SSM Parameter Store"
-
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -34,9 +30,7 @@ resource "aws_iam_policy" "ssm_read_policy" {
           "ssm:GetParameter",
           "ssm:GetParametersByPath"
         ]
-        # 必要に応じてリソースARNを絞り込むことを推奨
-        #例: "arn:aws:ssm:ap-northeast-1:123456789012:parameter/my-app/*"
-        Resource = "*"
+        Resource = "arn:aws:ssm:${module.current_account.region_name}:${module.current_account.account_id}:parameter/apprunner/${var.app_name}/env/*"
       }
     ]
   })
@@ -53,7 +47,6 @@ resource "aws_iam_role_policy_attachment" "instance_role_ssm_attachment" {
 resource "aws_iam_role" "apprunner_ecr_access_role" {
   name = "${var.app_name}-apprunner-ecr-access-role"
 
-  # App Runnerのビルドサービスがこのロールを引き受けることを許可
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

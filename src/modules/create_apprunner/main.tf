@@ -6,3 +6,7 @@ terraform {
     }
   }
 }
+
+module "current_account" {
+  source = "../get_aws_account"
+}
