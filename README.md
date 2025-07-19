@@ -1,20 +1,28 @@
+[english version](https://github.com/campbel2525/sample-apprunner-terraform/blob/main/README-ENGLISH.md)
+
 # info
 
-next.js を AWS App Runner で公開する Terraform のコードになります
+next.js を AWS App Runner で公開する Terraform のコードになります。
 
 # インフラ構成図
 
 ![インフラ構成図](https://github.com/campbel2525/sample-apprunner-terraform/blob/main/docs/%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E6%A7%8B%E6%88%90%E5%9B%B3/%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E6%A7%8B%E6%88%90%E5%9B%B3.png?raw=true)
 
-# 環境設定、apply
+# 環境設定
 
-1. `credentials/aws/config.example`を参考にして`credentials/aws/config`を作成
+1. AWS に SSO の設定を行う
 
-2. `make init`
+2. Terraform の state ファイルを保存するために AWS 上に S3 を作成する。
+
+3. `credentials/aws/config.example`を参考にして`credentials/aws/config`を作成
+
+4. `make init`
 
 # apply 方法(stg 環境の例)
 
 1. `src/project/backend-config.env-kind.hcl.example`を参考にして`src/project/backend-config.env-kind.hcl`を作成
+
+環境設定の手順 2 で作成した S3 のバケットを bucket に指定する
 
 2. `src/project/terraform.env-kind.tfvars.example`を参考にして`src/project/terraform.env-kind.tfvars`を作成
 
@@ -24,13 +32,17 @@ next.js を AWS App Runner で公開する Terraform のコードになります
 
 4. `cd /project/project`
 
-5. sso でログインを行う
+5. SSO でログインを行う
 
    `sl`
 
 6. `make stg-apply`
 
    削除する場合: `make stg-destroy`
+
+7. コンソールに出力されたドメインにアクセスして web ページが表示されれば OK
+
+この web ページは[サンプルの image](public.ecr.aws/aws-containers/hello-app-runner)から立ち上げたものです。
 
 # コマンド
 
