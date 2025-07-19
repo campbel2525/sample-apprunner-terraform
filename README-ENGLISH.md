@@ -4,6 +4,8 @@ This document contains the Terraform code for deploying a Next.js application on
 
 # Infrastructure Diagram
 
+![インフラ構成図](https://github.com/campbel2525/sample-apprunner-terraform/blob/main/docs/%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E6%A7%8B%E6%88%90%E5%9B%B3/%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E6%A7%8B%E6%88%90%E5%9B%B3.png?raw=true)
+
 # Environment Setup
 
 1. Set up SSO in AWS.
