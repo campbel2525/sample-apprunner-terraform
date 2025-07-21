@@ -1,11 +1,11 @@
-output "region_name" {
+output "region_id" {
   description = "The URL of the App Runner service."
-  value       = module.current_account.region_name
+  value       = module.current_account.region_id
 }
 
-output "user_front_apprunner_url" {
+output "user_front_apprunner_service_url" {
   description = "The URL of the App Runner service."
-  value       = module.user_front_apprunner.apprunner_url
+  value       = module.user_front_apprunner.apprunner_service_url
 }
 
 output "user_front_created_ecr_name" {

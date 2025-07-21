@@ -14,7 +14,7 @@ reset:
 # ステージング環境
 # ---------------------------------------------
 stg-init:
-	./init-stg.sh
+	./stg-init.sh
 
 stg-apply: ## apply
 	make stg-init
@@ -34,7 +34,7 @@ stg-destroy: ## destroy
 # 本番環境
 # ---------------------------------------------
 # prod-init:
-# 	./init-prod.sh
+# 	./prod-init.sh
 # prod-apply: ## apply
 # 	make prod-init
 # 	cd network && terraform apply -auto-approve -var-file=../terraform.prod.tfvars

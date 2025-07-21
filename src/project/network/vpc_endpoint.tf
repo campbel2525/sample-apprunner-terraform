@@ -5,7 +5,7 @@
 
 resource "aws_vpc_endpoint" "vpc_endpoint_ecr" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.ecr.api"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.ecr.api"
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [aws_security_group.vpc_endpoint_sg.id]
@@ -23,7 +23,7 @@ resource "aws_vpc_endpoint" "vpc_endpoint_ecr" {
 
 resource "aws_vpc_endpoint" "vpc_endpoint_dkr" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.ecr.dkr"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.ecr.dkr"
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [aws_security_group.vpc_endpoint_sg.id]
@@ -41,7 +41,7 @@ resource "aws_vpc_endpoint" "vpc_endpoint_dkr" {
 
 resource "aws_vpc_endpoint" "vpc_endpoint_ssm" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.ssm"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.ssm"
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [aws_security_group.vpc_endpoint_sg.id]
@@ -59,7 +59,7 @@ resource "aws_vpc_endpoint" "vpc_endpoint_ssm" {
 
 resource "aws_vpc_endpoint" "vpc_endpoint_ssm_messages" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.ssmmessages"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.ssmmessages"
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [aws_security_group.vpc_endpoint_sg.id]
@@ -77,7 +77,7 @@ resource "aws_vpc_endpoint" "vpc_endpoint_ssm_messages" {
 
 resource "aws_vpc_endpoint" "vpc_endpoint_ec2_messages" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.ec2messages"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.ec2messages"
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [aws_security_group.vpc_endpoint_sg.id]
@@ -95,7 +95,7 @@ resource "aws_vpc_endpoint" "vpc_endpoint_ec2_messages" {
 
 resource "aws_vpc_endpoint" "vpc_endpoint_cloudwatch_logs" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.logs"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.logs"
   vpc_endpoint_type = "Interface"
 
   security_group_ids = [aws_security_group.vpc_endpoint_sg.id]
@@ -113,7 +113,7 @@ resource "aws_vpc_endpoint" "vpc_endpoint_cloudwatch_logs" {
 
 resource "aws_vpc_endpoint" "vpc_endpoint_s3" {
   vpc_id            = aws_vpc.vpc.id
-  service_name      = "com.amazonaws.${module.current_account.region_name}.s3"
+  service_name      = "com.amazonaws.${module.current_account.region_id}.s3"
   vpc_endpoint_type = "Gateway"
 
   route_table_ids = [

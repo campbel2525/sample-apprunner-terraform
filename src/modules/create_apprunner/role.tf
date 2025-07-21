@@ -30,7 +30,7 @@ resource "aws_iam_policy" "ssm_read_policy" {
           "ssm:GetParameter",
           "ssm:GetParametersByPath"
         ]
-        Resource = "arn:aws:ssm:${module.current_account.region_name}:${module.current_account.account_id}:parameter/apprunner/${var.app_name}/env/*"
+        Resource = "arn:aws:ssm:${module.current_account.region_id}:${module.current_account.account_id}:parameter/apprunner/${var.app_name}/env/*"
       }
     ]
   })

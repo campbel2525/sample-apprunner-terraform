@@ -50,7 +50,7 @@ resource "aws_db_instance" "mysql_standalone" {
   # DB インスタンス識別子情報
   identifier = "db1-mysql-standalone"
 
-  username = "admin"
+  username = var.db_init_username
   password = var.db_init_password # 初期パスワード
 
   instance_class = "db.t3.micro"

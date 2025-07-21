@@ -46,12 +46,24 @@ module "app_sg" {
   security_group_name = "app-sg"
 }
 
-module "current_account" {
-  source = "../../modules/get_aws_account"
-}
-
 # module "user_front_ecr_repository" {
-#   source = "../../modules/get_ecr_repository"
+#   source = "../../modules/get_ecr"
 
 #   repository_name = "user-front-repo"
 # }
+
+module "lambda_sg" {
+  source = "../../modules/get_security_group"
+
+  vpc_name            = "vpc"
+  security_group_name = "migration-lambda-sg"
+}
+
+module "rds" {
+  source = "../../modules/get_rds"
+
+  db_instance_identifier = "db1-mysql-standalone"
+}
+module "current_account" {
+  source = "../../modules/get_aws_account"
+}

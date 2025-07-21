@@ -14,8 +14,8 @@ module "user_front_apprunner" {
     module.app_sg.id,
   ]
   ssm_parameter_app_env_names = [
-    "SECRET_KEY",
-    "FRONTEND_API_URL",
+    # "SECRET_KEY",
+    # "FRONTEND_API_URL",
     "DATABASE_URL",
     "NEXTAUTH_URL",
     "NEXTAUTH_SECRET",

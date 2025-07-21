@@ -4,6 +4,9 @@ variable "aws_default_profile" {
 }
 
 # db
+variable "db_init_username" {
+  type = string
+}
 variable "db_name" {
   type = string
 }
@@ -18,5 +21,5 @@ variable "github_fingerprint" {
 }
 variable "github_subject" {
   type        = string
-  description = "repo:<github account名>/<リポジトリ名>:ref:refs/heads/<ブランチ名>"
+  description = "repo:<GitHubのアカウント名>/<リポジトリ名>:environment:<branch名>"
 }

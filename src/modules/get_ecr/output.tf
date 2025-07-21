@@ -12,3 +12,8 @@ output "registry_id" {
   description = "The AWS account ID of the registry"
   value       = data.aws_ecr_repository.this.registry_id
 }
+
+output "name" {
+  description = "The AWS account ID of the registry"
+  value       = data.aws_ecr_repository.this.name
+}

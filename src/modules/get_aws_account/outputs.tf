@@ -8,6 +8,6 @@ output "arn" {
   value       = data.aws_caller_identity.current.arn
 }
 
-output "region_name" {
-  value = data.aws_region.current.name
+output "region_id" {
+  value = data.aws_region.current.id
 }
