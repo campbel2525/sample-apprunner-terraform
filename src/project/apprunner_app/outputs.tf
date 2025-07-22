@@ -1,8 +1,18 @@
+# ---------------------------------------------
+# 共通
+# ---------------------------------------------
+output "rds_dns_address" {
+  value = module.rds.dns_address
+}
+
 output "region_id" {
   description = "The URL of the App Runner service."
   value       = module.current_account.region_id
 }
 
+# ---------------------------------------------
+# use front
+# ---------------------------------------------
 output "user_front_apprunner_service_url" {
   description = "The URL of the App Runner service."
   value       = module.user_front_apprunner.apprunner_service_url

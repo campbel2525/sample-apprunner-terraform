@@ -16,8 +16,9 @@ variable "apprunner_port" {
 }
 
 variable "apprunner_auto_deployments_enabled" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
+  description = "ECRにイメージをpushした場合に自動でデプロイを走らせるかどうか"
 }
 
 variable "subnet_ids" {

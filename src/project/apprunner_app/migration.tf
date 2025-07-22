@@ -26,13 +26,18 @@ resource "aws_lambda_function" "migration_lambda" {
   # 環境変数
   environment {
     variables = {
-      DB_HOST = module.rds.endpoint
-      DB_USER = var.db_init_username
+      DATABASE_URL = ""
     }
   }
 
   tags = {
     Name = "database-migration-lambda"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      environment,
+    ]
   }
 }
 

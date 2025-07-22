@@ -5,7 +5,7 @@ module "user_front_apprunner" {
   apprunner_cpu                      = 256
   apprunner_memory                   = 512
   apprunner_port                     = 3000
-  apprunner_auto_deployments_enabled = false # 初期のapplyはfalseにする
+  apprunner_auto_deployments_enabled = false # ecrにpushした場合にデプロイを走るようにするかどうか
   subnet_ids = [
     module.private_subnet_1a.id,
     # module.private_subnet_1c.id,
