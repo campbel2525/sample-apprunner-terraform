@@ -1,8 +1,8 @@
 # ---------------------------------------------
 # 共通
 # ---------------------------------------------
-output "rds_dns_address" {
-  value = module.rds.dns_address
+output "rds_address" {
+  value = module.rds.address
 }
 
 output "region_id" {

@@ -8,12 +8,12 @@ output "endpoint" {
 #   value       = data.aws_db_instance.this.port
 # }
 
-output "dns_address" {
+output "address" {
   description = "RDSインスタンスのDNSアドレス"
   value       = data.aws_db_instance.this.address
 }
 
-output "arn" {
+output "db_instance_arn" {
   description = "RDSインスタンスのARN"
   value       = data.aws_db_instance.this.db_instance_arn
 }

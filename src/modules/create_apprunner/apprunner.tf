@@ -16,7 +16,7 @@ resource "aws_apprunner_service" "this" {
       access_role_arn = aws_iam_role.apprunner_ecr_access_role.arn
     }
     image_repository {
-      image_identifier      = "${var.apprunner_image_identifier}:latest"
+      image_identifier      = var.apprunner_image_identifier
       image_repository_type = "ECR"
 
       image_configuration {

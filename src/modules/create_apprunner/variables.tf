@@ -18,12 +18,16 @@ variable "apprunner_port" {
 variable "apprunner_auto_deployments_enabled" {
   type        = bool
   default     = false
-  description = "ECRにイメージをpushした場合に自動でデプロイを走らせるかどうか"
+  description = "ECRにイメージをpushした場合に自動でデプロイを走らせるかどうか。"
 }
 
 variable "apprunner_image_identifier" {
   type        = string
-  description = "イメージの識別子。ECRのリポジトリURLとタグを組み合わせたもの。例: aws_account_id.dkr.ecr.region.amazonaws.com/repository_name:tag"
+  description = <<-EOF
+    イメージの識別子。ECRのリポジトリURLとタグを組み合わせたもの。
+    例: aws_account_id.dkr.ecr.region.amazonaws.com/repository_name:tag
+    特に自動デプロイする場合は、タグを合わせることに注意です。
+  EOF
 }
 
 variable "subnet_ids" {
