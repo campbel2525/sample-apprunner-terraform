@@ -2,14 +2,18 @@
 # Lambda関数 本体
 # ---------------------------------------------
 resource "aws_lambda_function" "migration_lambda" {
-  function_name    = "database-migration-lambda"
-  role             = aws_iam_role.lambda_exec_role.arn
-  filename         = "index.js.zip"
-  source_code_hash = filebase64sha256("index.js.zip")
+  function_name = "database-migration-lambda"
+  role          = aws_iam_role.lambda_exec_role.arn
+  # filename         = "index.js.zip"
+  # source_code_hash = filebase64sha256("index.js.zip")
 
   # 実行環境の設定
-  handler = "index.handler" # zip内のハンドラに合わせてください
-  runtime = "nodejs22.x"
+  # handler = "index.handler" # zip内のハンドラに合わせてください
+  # runtime = "nodejs22.x"
+
+  package_type = "Image"
+  image_uri    = "${aws_ecr_repository.user_front_ecr.repository_url}:latest"
+
 
   # タイムアウト
   timeout = 300
