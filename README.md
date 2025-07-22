@@ -1,84 +1,124 @@
 [english version](https://github.com/campbel2525/sample-apprunner-terraform/blob/main/README-ENGLISH.md)
 
-# info
+# AWS App Runner on Terraform
 
-next.js を AWS App Runner で公開する Terraform のコードになります。
+Next.js で構築されたアプリケーションを AWS App Runner で公開するための Terraform プロジェクトです。
 
-# インフラ構成図
+## インフラ構成図
 
 ![インフラ構成図](https://github.com/campbel2525/sample-apprunner-terraform/blob/main/docs/%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E6%A7%8B%E6%88%90%E5%9B%B3/%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E6%A7%8B%E6%88%90%E5%9B%B3.png?raw=true)
 
-# 環境設定
+## 必要要件
 
-1. AWS に SSO の設定を行う
+- [AWS CLI](https://aws.amazon.com/jp/cli/)
+- [Terraform](https://www.terraform.io/)
+- [Docker](https://www.docker.com/)
+- [make](https://www.gnu.org/software/make/)
 
-2. Terraform の state ファイルを保存するために AWS 上に S3 を作成する。
+## セットアップ
 
-3. `credentials/aws/config.example`を参考にして`credentials/aws/config`を作成
+1.  **AWS SSO の設定**:
+    AWS アカウントで SSO を有効化してください。
 
-4. `make init`
+2.  **S3 バケットの作成**:
+    Terraform の State ファイルを保存するための S3 バケットを AWS 上に作成します。
 
-# apply 方法(stg 環境の例)
+3.  **AWS 認証情報の設定**:
+    `credentials/aws/config.example` を参考に `credentials/aws/config` を作成します。
 
-1. `src/project/backend-config.env-kind.hcl.example`を参考にして`src/project/backend-config.env-kind.hcl`を作成
+4.  **初期化**:
+    `make init` を実行して、Docker イメージのビルドなどを行います。
 
-環境設定の手順 2 で作成した S3 のバケットを bucket に指定する
+## デプロイ手順 (ステージング環境の例)
 
-2. `src/project/terraform.env-kind.tfvars.example`を参考にして`src/project/terraform.env-kind.tfvars`を作成
+1.  **バックエンド設定ファイルの作成**:
+    `src/project/backend-config.stg.hcl.example` をコピーして `src/project/backend-config.stg.hcl` を作成します。`bucket`には、セットアップ手順 2 で作成した S3 バケット名を指定してください。
 
-3. `make shell`
+2.  **変数ファイルの作成**:
+    `src/project/terraform.stg.tfvars.example` をコピーして `src/project/terraform.stg.tfvars` を作成し、環境に合わせて変数を設定します。
 
-   ここから下は docker 内で行われる
+3.  **Docker コンテナに入る**:
+    `make shell` を実行して、Terraform 実行用のコンテナに入ります。
 
-4. `cd /project/project`
+    ***
 
-5. SSO でログインを行う
+    **以下の手順は Docker コンテナ内で実行します。**
 
-   `sl`
+4.  **プロジェクトディレクトリへ移動**:
 
-6. `make stg-apply`
+    ```sh
+    cd /project/project
+    ```
 
-   削除する場合: `make stg-destroy`
+5.  **AWS へログイン**:
+    SSO で AWS にログインします。
 
-7. コンソールに出力されたドメインにアクセスして web ページが表示されれば OK
+    ```sh
+    sl
+    ```
 
-この web ページは[サンプルの image](public.ecr.aws/aws-containers/hello-app-runner)から立ち上げたものです。
+6.  **Terraform の実行**:
+    ステージング環境にインフラを構築します。
 
-# コマンド
+    ```sh
+    make stg-apply
+    ```
 
-## github の finger print を取得するコマンド。
+    インフラを削除する場合は `make stg-destroy` を実行します。
 
-環境変数に設置する際には大文字を小文字に変換すること
+7.  **動作確認**:
+    コンソールに出力された App Runner のデフォルトドメインにアクセスし、サンプルページが表示されればデプロイ成功です。
+    (この時点では、AWS 提供のサンプルイメージ `public.ecr.aws/aws-containers/hello-app-runner` がデプロイされています)
 
-```
+## コマンドリファレンス
+
+### GitHub Actions OIDC 用 Thumbprint 取得
+
+GitHub Actions から OIDC で AWS に接続する場合に必要となる Thumbprint を取得します。
+
+```sh
 openssl s_client -connect token.actions.githubusercontent.com:443 -showcerts \
  </dev/null 2>/dev/null \
  | openssl x509 -noout -fingerprint -sha1 \
  | sed 's/://g' | sed 's/SHA1 Fingerprint=//'
 ```
 
-# Tips
+_注意: 環境変数などに設定する際は、結果を小文字に変換してください。_
 
-## 1
+## 補足事項
 
-App Runner を apply する際にデプロイが必ず走ります。デプロイを走らないようにするのは不可能です。
+### App Runner の初回デプロイについて
 
-そのためインフラの構築は
+`terraform apply` で App Runner サービスを新規作成すると、必ずデプロイが実行されます。このとき、デプロイするコンテナイメージが ECR に存在しないとエラーになります。
 
-1. Ecr を作成
+そのため、インフラの構築は以下のステップで行う必要があります。
 
-   (例) `terraform apply -auto-approve -target=module.user_front_apprunner.aws_ecr_repository.app -var-file=../terraform.stg.tfvars`
+1.  **ECR リポジトリの作成**:
+    まず ECR リポジトリのみを作成します。
 
-   push の具体的な処理は`push_initial_image.sh`に書いてあります。
+    ```sh
+    # (例)
+    terraform apply -auto-approve -target=module.user_front_apprunner.aws_ecr_repository.app -var-file=../terraform.stg.tfvars
+    ```
 
-2. AWS にあるサンプル image を push
+2.  **サンプルイメージの Push**:
+    作成した ECR リポジトリに、AWS 提供のサンプルイメージを Push します。
+    `push_initial_image.sh` に具体的な処理が記述されています。
 
-   (例) `./push_initial_image.sh aws-stg ap-northeast-1 user-front-repo`
+    ```sh
+    # (例)
+    ./push_initial_image.sh aws-stg ap-northeast-1 user-front-repo
+    ```
 
-3. App Runner を apply
+3.  **App Runner サービスの作成**:
+    ECR にイメージが Push された状態で、App Runner を含むすべてのリソースを apply します。
+    ```sh
+    # (例)
+    terraform apply -auto-approve -var-file=../terraform.stg.tfvars
+    ```
 
-   (例) `terraform apply -auto-approve -var-file=../terraform.stg.tfvars`
+`src/project/Makefile` の `stg-apply` ターゲットでは、これらの手順が自動的に実行されるようになっています。
 
-という流れになっています。
+# 補足
 
-`src/project/Makefile`の`stg-apply`を参照
+next.js のプロジェクト[sample-nextjs-project](https://github.com/campbel2525/sample-nextjs-project/)と合わせて使用すると next.js のアプリケーション、インフラ周りが完了します
