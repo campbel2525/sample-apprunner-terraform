@@ -14,8 +14,8 @@ resource "aws_iam_openid_connect_provider" "github" {
 }
 
 # GitHub Actionsが引き受けるためのロール
-resource "aws_iam_role" "github_actions_role_user_front" {
-  name = "user-front-apprunner-github-actions-role"
+resource "aws_iam_role" "github_actions_role" {
+  name = "apprunner-github-actions-role"
 
   # OIDCプロバイダー経由での引き受けを許可
   assume_role_policy = jsonencode({
@@ -69,7 +69,7 @@ resource "aws_iam_policy" "github_actions_apprunner_policy" {
         # ここには、GitHub Actions がイメージをプッシュするすべてのECRリポジトリのARNを列挙する必要があります。
         # 例: ステージングと本番で異なるリポジトリを使用する場合
         Resource = [
-          module.user_front_apprunner.ecr_arn,
+          aws_ecr_repository.user_front_ecr.arn,
           # "arn:aws:ecr:${var.aws_region}:${data.aws_caller_identity.current.account_id}:repository/your-prod-app-ecr-repo"
         ]
       },
@@ -83,6 +83,6 @@ resource "aws_iam_policy" "github_actions_apprunner_policy" {
   })
 }
 resource "aws_iam_role_policy_attachment" "github_actions_policy_attachment" {
-  role       = aws_iam_role.github_actions_role_user_front.name
+  role       = aws_iam_role.github_actions_role.name
   policy_arn = aws_iam_policy.github_actions_apprunner_policy.arn
 }

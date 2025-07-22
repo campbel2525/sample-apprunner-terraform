@@ -6,6 +6,7 @@ module "user_front_apprunner" {
   apprunner_memory                   = 512
   apprunner_port                     = 3000
   apprunner_auto_deployments_enabled = false # ecrにpushした場合にデプロイを走るようにするかどうか
+  apprunner_image_identifier         = "${aws_ecr_repository.user_front_ecr.repository_url}:latest"
   subnet_ids = [
     module.private_subnet_1a.id,
     # module.private_subnet_1c.id,

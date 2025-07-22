@@ -21,6 +21,11 @@ variable "apprunner_auto_deployments_enabled" {
   description = "ECRにイメージをpushした場合に自動でデプロイを走らせるかどうか"
 }
 
+variable "apprunner_image_identifier" {
+  type        = string
+  description = "イメージの識別子。ECRのリポジトリURLとタグを組み合わせたもの。例: aws_account_id.dkr.ecr.region.amazonaws.com/repository_name:tag"
+}
+
 variable "subnet_ids" {
   type    = list(string)
   default = []

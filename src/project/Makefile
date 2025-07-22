@@ -20,7 +20,7 @@ stg-apply: ## apply
 	make stg-init
 	cd network && terraform apply -auto-approve -var-file=../terraform.stg.tfvars
 	cd rds1 && terraform apply -auto-approve -var-file=../terraform.stg.tfvars
-	cd apprunner_app && terraform apply -auto-approve -target=module.user_front_apprunner.aws_ecr_repository.app -var-file=../terraform.stg.tfvars
+	cd apprunner_app && terraform apply -auto-approve -target=aws_ecr_repository.user_front_ecr -var-file=../terraform.stg.tfvars
 	cd apprunner_app && ./push_initial_image.sh aws-stg ap-northeast-1 user-front-repo
 	cd apprunner_app && terraform apply -auto-approve -var-file=../terraform.stg.tfvars
 
