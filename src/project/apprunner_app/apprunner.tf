@@ -14,9 +14,7 @@ module "user_front_apprunner" {
   security_group_ids = [
     module.app_sg.id,
   ]
-  ssm_parameter_app_env_names = [
-    # "SECRET_KEY",
-    # "FRONTEND_API_URL",
+  ssm_parameter_app_env_names = [ # 実際ののアプリケーションに合わせてください
     "DATABASE_URL",
     "NEXTAUTH_URL",
     "NEXTAUTH_SECRET",
