@@ -19,7 +19,7 @@ terraform {
   }
 
   backend "s3" {
-    key = "apprunner_app/terraform.tfstate"
+    key = "apps/terraform.tfstate"
   }
 }
 
