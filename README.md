@@ -1,6 +1,6 @@
 # 補足
 
-Next.js のプロジェクト[sample-nextjs-project](https://github.com/campbel2525/sample-projects/tree/main/002_nextjs_project)と合わせて使用すると Next.js のアプリケーション、インフラ周りが完了します
+Next.js のプロジェクト[sample-nextjs-project](https://github.com/campbel2525/sample-nextjs-project)と合わせて使用すると Next.js のアプリケーション、インフラ周りが完了します
 
 # AWS App Runner on Terraform
 
