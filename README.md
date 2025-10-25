@@ -10,7 +10,6 @@ Next.js で構築されたアプリケーションを AWS App Runner で公開�
 
 <img width="1564" height="1296" alt="image" src="https://github.com/user-attachments/assets/fc27b099-8614-4388-adf8-a09bb0cbece0" />
 
-
 ## 必要要件
 
 - [Docker](https://www.docker.com/)
@@ -145,3 +144,5 @@ aws --profile aws-stg ec2 describe-instances
 ```
 aws --profile aws-stg rds describe-db-instances
 ```
+
+#
